@@ -1,7 +1,20 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
+  
   margin: auto;
   max-width: 38rem;
   padding: 2rem;
+}
+
+input{
+  background-color: black;
+  color:azure;
+  font-family:'Fira Code';
+  border-radius:5px;
+  border: 2px solid rgb(32, 30, 33);
+  padding:10px;
+}
+
+input:focus{
+    border: 2px solid plum;
+    outline: none;
 }
