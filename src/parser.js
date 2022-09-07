@@ -1,6 +1,28 @@
 prompt = document.getElementById("prompt");
 
-pattern = new RegExp(/[\(\"*\"\)\(\'*'\\)\([^\"\']*[^\"\']\)]/);
+class Token {
+  constructor(_token) {
+    this.val = _token;
+  }
+}
+
+class CommandToken extends Token {
+  constructor(_val) {
+    super(_val);
+    this.options = [];
+  }
+}
+
+class OptionToken extends Token {
+  constructor(_val) {
+    super(_val);
+  }
+}
+class ArgumentToken extends Token {
+  constructor(_val) {
+    super(_val);
+  }
+}
 
 class Lexer {
   constructor(text) {
@@ -8,7 +30,8 @@ class Lexer {
     this.tokens = this.text.split(" ");
     this.joinTokensWithSpaces();
   }
-  //joins tokens that are seperated by spaces but must be used as a single unit like filenames with spaces
+
+  //join tokens that are seperated by spaces but must be used as a single unit like filenames with spaces
   joinTokensWithSpaces() {
     let i = 0;
     while (i < this.tokens.length) {
@@ -17,6 +40,9 @@ class Lexer {
       let eo = currentToken.endsWith("'");
       let sd = currentToken.startsWith('"');
       let ed = currentToken.endsWith('"');
+
+      // check if token is properly enclosed with any kind of quotes or no quotes at all
+      // token that is partially quoted gets concatinated with the next token
       if ((so && eo) || (sd && ed) || (!(so || eo) && !(sd || ed))) {
         i++;
       } else {
@@ -27,15 +53,13 @@ class Lexer {
   }
 }
 
-// const prompt = require("prompt-sync")({ sigint: true });
-//With readline
-
+//parse input only when enter key is pressed
 prompt.addEventListener("keydown", (e) => {
   if (e.key == "Enter") parse(prompt.value);
 });
 
+//create Lexer object for given text
 function parse(text) {
   const lexer = new Lexer(text);
   console.log(lexer.tokens);
-  delete lexer;
 }
