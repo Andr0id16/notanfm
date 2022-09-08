@@ -1,8 +1,8 @@
 body {
   font-family:'Fira Code';
   margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  min-width:100vw;
+  padding: 0px;
 }
 
 input{
@@ -30,8 +30,9 @@ input:focus{
 }
 
 .item{
-  padding:1vw;
-  max-width:50vw;
+  padding:1em;
+  font-size: small;
+  max-width:200px;
   min-height: 2vh;
   background-color: beige;
   border-radius:2px;
