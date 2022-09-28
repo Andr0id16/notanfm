@@ -1,30 +1,5 @@
 prompt = document.getElementById("prompt");
 const c = require("child_process");
-// import { exec } from "child_process";
-class Token {
-  constructor(_token) {
-    this.val = _token;
-  }
-}
-
-class CommandToken extends Token {
-  constructor(_val) {
-    super(_val);
-    this.options = [];
-  }
-}
-
-class OptionToken extends Token {
-  constructor(_val) {
-    super(_val);
-  }
-}
-class ArgumentToken extends Token {
-  constructor(_val) {
-    super(_val);
-  }
-}
-
 class Lexer {
   constructor(text) {
     this.text = text;
@@ -55,12 +30,14 @@ class Lexer {
 }
 
 //parse input only when enter key is pressed
-prompt.addEventListener("keydown", (e) => {
-  if (e.key == "Enter") parse(prompt.value);
-});
+// prompt.addEventListener("keydown", (e) => {
+//   if (e.key == "Enter") parse(prompt.value);
+// });
 
-//create Lexer object for given text
-function parse(text) {
-  const lexer = new Lexer(text);
-  console.log(lexer.tokens);
-}
+// //create Lexer object for given text
+// function parse(text) {
+//   const lexer = new Lexer(text);
+//   console.log(lexer.tokens);
+// }
+
+module.exports.Lexer = Lexer;
