@@ -1,7 +1,45 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family:'Fira Code';
   margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  min-width:100vw;
+  padding: 0px;
+}
+
+input{
+  background-color: black;
+  color:azure;
+  width:100vw;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  border: 2px solid rgb(32, 30, 33);
+  padding:14px;
+}
+
+input:focus{
+    
+    border: 2px solid plum;
+    outline: none;
+}
+
+#output-box{
+  height:100vh;
+  width:100vw;
+  background-color:cadetblue;
+  padding-top:10vh;
+  padding-left:4vh;
+}
+
+.item{
+  padding:1em;
+  font-size: small;
+  max-width:200px;
+  min-height: 2vh;
+  background-color: beige;
+  border-radius:2px;
+  transition: color smooth;
+  cursor: pointer;
+}
+.item:hover{
+  background-color:rgb(250, 228, 200)
+
 }

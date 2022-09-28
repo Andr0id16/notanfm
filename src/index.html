@@ -2,11 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Notanfm</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <input class="prompt" id="prompt" name="prompt" placeholder="Type a command here"></input>
+    <div class='output-box' id="output-box">
+      <div class="item">
+        PES1UG20CS999.pdf
+      </div>
+    </div>
   </body>
+  <script defer type="module" src="parser.mjs"></script>
+  <script defer type="module" src="code.mjs"></script>
 </html>
