@@ -1,45 +1,49 @@
+/* This is a very ugly style. Please change later */
 body {
-  font-family:'Fira Code';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
   margin: auto;
-  min-width:100vw;
-  padding: 0px;
+  max-width: 38rem;
+  padding: 2rem;
+  background-color: #282828;
 }
 
-input{
-  background-color: black;
-  color:azure;
-  width:100vw;
-  border-top-left-radius:5px;
-  border-top-right-radius:5px;
-  border: 2px solid rgb(32, 30, 33);
-  padding:14px;
+.command_area,
+.output {
+  font-family: monospace;
 }
 
-input:focus{
-    
-    border: 2px solid plum;
-    outline: none;
+.command_area {
+  background-color: #d79921;
+  height: 20px;
+  width:200px;
+  padding:4px;
+  margin-bottom:4px;
+  border:none;
 }
 
-#output-box{
-  height:100vh;
-  width:100vw;
-  background-color:cadetblue;
-  padding-top:10vh;
-  padding-left:4vh;
+.command_area::placeholder {
+  color: #3d3f32;
 }
 
-.item{
-  padding:1em;
-  font-size: small;
-  max-width:200px;
-  min-height: 2vh;
-  background-color: beige;
-  border-radius:2px;
-  transition: color smooth;
-  cursor: pointer;
+.error_text {
+  background-color: #fb4934;
 }
-.item:hover{
-  background-color:rgb(250, 228, 200)
 
+.output_text {
+  margin:none;
+  padding: none;
+  border: none;
+  color: #d79921;
+}
+
+.output_text a {
+    margin:none;
+    padding: none;
+    border: none;
+  color: #d79921;
+}
+
+.cat_text {
+  color: #458588;
 }

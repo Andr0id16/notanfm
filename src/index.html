@@ -2,17 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Notanfm</title>
+    <title>Hello World!</title>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <input class="prompt" id="prompt" name="prompt" placeholder="Type a command here"></input>
-    <div class='output-box' id="output-box">
-      <div class="item">
-        PES1UG20CS999.pdf
-      </div>
-    </div>
+    <input
+      type="text"
+      id="command_box"
+      class="command_area"
+      placeholder="Type your command here"
+    />
+    <div class="output" id="output_box"></div>
+    <script type="module" src="code.mjs"></script>
   </body>
-  <script defer type="module" src="parser.mjs"></script>
-  <script defer type="module" src="code.mjs"></script>
 </html>
