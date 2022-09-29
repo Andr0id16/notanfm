@@ -21,9 +21,9 @@ var decorators = {
     return temp;
   },
   "/bin/cat": (output, progargs) => {
-    var owo = `<span class="cat_text">${output}</span>`;
-    console.log(owo);
-    return owo;
+    var uwu = `<span class="cat_text">${output}</span>`;
+    console.log(uwu);
+    return uwu;
   },
 };
 
