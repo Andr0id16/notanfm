@@ -1,4 +1,3 @@
-prompt = document.getElementById("prompt");
 class Lexer {
   constructor(text) {
     this.text = text;

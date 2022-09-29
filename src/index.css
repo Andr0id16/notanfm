@@ -31,16 +31,14 @@ body {
 }
 
 .output_text {
+  max-width: 100px;
   margin:none;
-  padding: none;
-  border: none;
+  padding:2px;
+  border: hidden;
   color: #d79921;
 }
 
 .output_text a {
-    margin:none;
-    padding: none;
-    border: none;
   color: #d79921;
 }
 
