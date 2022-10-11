@@ -33,7 +33,7 @@ body {
 .output_text {
   max-width: 100px;
   margin:none;
-  padding:2px;
+  padding:8px;
   border: hidden;
   color: #d79921;
 }

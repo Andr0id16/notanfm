@@ -1,7 +1,6 @@
 class Lexer {
   constructor(text) {
     this.text = text;
-    console.log(this.text);
     this.tokens = this.text.split(" ");
     this.joinTokensWithSpaces();
   }
@@ -9,7 +8,6 @@ class Lexer {
   //join tokens that are seperated by spaces but must be used as a single unit like filenames with spaces
   joinTokensWithSpaces() {
     let i = 0;
-    console.log(this.tokens);
     while (i < this.tokens.length) {
       let currentToken = this.tokens[i];
       let so = currentToken.startsWith("'");
@@ -26,7 +24,6 @@ class Lexer {
         this.tokens.splice(i + 1, 1);
       }
     }
-    console.log(this.tokens);
   }
 }
 

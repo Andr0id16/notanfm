@@ -1,13 +1,14 @@
 const { execFile } = require("child_process");
 const { Lexer } = require("./parser.js");
 const { CommandList } = require("./commandboxlogic.js");
-const { OutputList, outputMap, OutputObject } = require("./output.js");
-
+const { OutputNodeList, OutputObject } = require("./output.js");
+var { outputObjectMap } = require("./output.js");
 // Globals declaration
 var output_box = document.getElementById("output_box");
 var command_box = document.getElementById("command_box");
 var commandlist = new CommandList();
-var outputlist = new OutputList();
+var outputlist = new OutputNodeList();
+var previewWindow = null;
 command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
 
@@ -16,9 +17,9 @@ document.addEventListener("keydown", handleOutOfFocus);
 // whenever a command generates ouptut each output item must obtain functionality such as dblclick, right-click,etc.
 // executeFile promises 🤝 that execFile generates some output, like a list of files/directories
 // promise resolved only on completion of generation of output
-// once promise is resolved , ***then*** manipulate output, like adding functionality
+// once promise is resolved , ***only then*** manipulate output, like adding functionality to thr output
 // *** IMPORTANT : manipulating output before all output is generated can lead to errors***
-// This function is needed solely for the reason that execFile is asynchronous, but nothing can be done till execFile completely generates it output
+// This function is needed solely for the reason that execFile is asynchronous and nothing can be done till execFile completely generates its output
 // so wait till execFile completes using Promise->resolve.then()
 function executeFile(progname, progargs) {
   return new Promise((resolve, reject) => {
@@ -33,17 +34,36 @@ function executeFile(progname, progargs) {
     });
   });
 }
-
+// Use this function if you want to add interactivity to genrated output elements
+// this functions grabs all generated output element and one-by-one adds event listeners to each item
 function addOutputFunctionality(progname, progargs) {
-  // create a list of the output_text nodes
-  outputlist = new OutputList();
+  // create a list of the output_text DOM nodes
+  outputlist = new OutputNodeList();
   outputlist.appendAll(document.querySelectorAll(".output_text"));
 
   // for each output_text node add any eventlistener (functionality)
   for (let output of outputlist.list) {
     //double-click on output item to enter or open said item
+
+    output.addEventListener("click", async (e) => {
+      // if outputObject is an HTML page hovering will open new window with the rendered html
+      var object = outputObjectMap[e.target.innerHTML];
+      if (object.type === "html") {
+        if (previewWindow) {
+          previewWindow.close();
+          previewWindow = null;
+        }
+        if (!previewWindow)
+          previewWindow = window.open(
+            object.path,
+            "_blank",
+            "top=500,left=200,frame=false,nodeIntegration=no"
+          );
+      }
+    });
     output.addEventListener("dblclick", (e) => {
-      var object = outputMap[e.target.innerHTML]; // get innerHTML(file name) of the output_box that triggered this event and get its output object
+      var object = outputObjectMap[e.target.innerHTML];
+      // get innerHTML(file name) of the output_box that triggered this event and get its output object
       if (object.type === "dictionary") {
         // if the output item is type dictionary double clicking it will add the name of the dictionary to the command_box path
         // so command_box will have path of the dictionary
@@ -64,13 +84,11 @@ function addOutputFunctionality(progname, progargs) {
 
     // right click on item to ??
     output.addEventListener("contextmenu", (e) => {
-      console.log("right-click");
       e.target.style.background = "yellow";
     });
 
     // mouseout of item to ??
     output.addEventListener("mouseout", (e) => {
-      console.log("right-click");
       e.target.style.background = "inherit";
     });
 
@@ -90,9 +108,11 @@ var decorators = {
   "/bin/ls": (output, progargs) => {
     var wordlist = output.split("\n");
     var temp = "";
+    outputObjectMap = {};
     for (var i = 1; i < wordlist.length; i++) {
-      outputMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div class="output_text">${wordlist[i]}</div><br />`;
+      // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
+      outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
+      temp += `<div class="output_text">${wordlist[i]}</div>`;
     }
 
     return temp;
@@ -112,7 +132,6 @@ function handle_keydown(event) {
     var commandstring = document.getElementById("command_box").value;
     commandlist.append(commandstring);
     var tokenslist = new Lexer(commandstring).tokens;
-    console.log(tokenslist);
     var progname = tokenslist[0];
     var progargs = [tokenslist[1]];
     executeFile(progname, progargs).then(() => {

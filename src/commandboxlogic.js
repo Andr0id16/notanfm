@@ -1,4 +1,4 @@
-// instantiate object with a list as member
+// instantiate an object with a list as its member
 // all commands get appended to this list
 // used for implementing command history
 class CommandList {
