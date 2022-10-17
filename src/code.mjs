@@ -23,6 +23,7 @@ function handle_keydown(event) {
   if (event.keyCode == 13) {
     var commandString = document.getElementById("command_box").value;
     commandList.append(commandString);
+    console.log(commandList.list);
     var tokenslist = new Lexer(commandString).tokens;
     var progname = tokenslist[0];
     var progargs = [tokenslist[1]];
@@ -50,8 +51,25 @@ function handleOutOfFocus(event) {
     outputList.list[outputList.currentIndex].dispatchEvent(
       new Event("dblclick")
     );
-  } else {
-    //do what?
+  }
+  // new feature added
+  // allows to use backspace to go to previous page
+  else if (event.keyCode == 8) {
+    // a not so smart way of implementing this
+    var [progname, current_path] = command_box.value.split(" ");
+    // get path upto parent directory
+    var parent = current_path.slice(0, current_path.lastIndexOf("/")) || "/";
+    command_box.value = `${progname} ${parent}`;
+    command_box.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 13 }));
+  }
+  // also adding forward traversal using alt key
+  else if (event.keyCode == 18) {
+    putPreviousCommand();
+    command_box.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 13 }));
+  }
+  // also adding forward traversal using alt key
+  else {
+    //do something else
   }
 }
 

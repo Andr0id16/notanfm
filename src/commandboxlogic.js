@@ -26,7 +26,8 @@ class CommandList {
   // to be called whenever command_box get a new command
   append(command) {
     this.list.push(command);
-    this.currentindex++;
+    // whenever a new command is added update latest
+    this.currentindex = this.list.length - 1;
   }
 }
 
