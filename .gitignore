@@ -87,3 +87,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Debian Packages that get installed accidentally
+*.deb
