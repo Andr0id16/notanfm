@@ -3,16 +3,57 @@ const { Lexer } = require("./parser.js");
 const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
+
 // Globals declaration
 var output_box = document.getElementById("output_box");
 var command_box = document.getElementById("command_box");
-var commandlist = new CommandList();
-var outputlist = new OutputNodeList();
+var commandList = new CommandList();
+var outputList = new OutputNodeList();
 var previewWindow = null;
 command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
 
-// Utlility function definitions
+// Function Declarations
+
+// event handler for command_box
+function handle_keydown(event) {
+  event.stopPropagation();
+
+  // if enter pressed in command_box
+  if (event.keyCode == 13) {
+    var commandString = document.getElementById("command_box").value;
+    commandList.append(commandString);
+    var tokenslist = new Lexer(commandString).tokens;
+    var progname = tokenslist[0];
+    var progargs = [tokenslist[1]];
+    executeFile(progname, progargs).then(() => {
+      addOutputFunctionality(progname, progargs);
+    });
+  } // if up arrow when in command_box
+  else if (event.keyCode == 38) {
+    putPreviousCommand();
+  } // if down arrow when in command_box
+  else if (event.keyCode == 40) {
+    putNextCommand();
+  }
+}
+
+//event handler for output_box
+function handleOutOfFocus(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  // if tab key pressed then highlight next node in the output list
+  if (event.keyCode == 9) {
+    outputList.highlightNext();
+  } // if enter pressed, then, for currently selected output_text node manually trigger the double click event
+  else if (event.keyCode == 13) {
+    outputList.list[outputList.currentIndex].dispatchEvent(
+      new Event("dblclick")
+    );
+  } else {
+    //do what?
+  }
+}
 
 // whenever a command generates ouptut each output item must obtain functionality such as dblclick, right-click,etc.
 // executeFile promises 🤝 that execFile generates some output, like a list of files/directories
@@ -34,15 +75,16 @@ function executeFile(progname, progargs) {
     });
   });
 }
+
 // Use this function if you want to add interactivity to genrated output elements
 // this functions grabs all generated output element and one-by-one adds event listeners to each item
 function addOutputFunctionality(progname, progargs) {
   // create a list of the output_text DOM nodes
-  outputlist = new OutputNodeList();
-  outputlist.appendAll(document.querySelectorAll(".output_text"));
+  outputList = new OutputNodeList();
+  outputList.appendAll(document.querySelectorAll(".output_text"));
 
   // for each output_text node add any eventlistener (functionality)
-  for (let output of outputlist.list) {
+  for (let output of outputList.list) {
     //double-click on output item to enter or open said item
 
     output.addEventListener("click", async (e) => {
@@ -63,6 +105,7 @@ function addOutputFunctionality(progname, progargs) {
     });
     output.addEventListener("dblclick", (e) => {
       var object = outputObjectMap[e.target.innerHTML];
+
       // get innerHTML(file name) of the output_box that triggered this event and get its output object
       if (object.type === "dictionary") {
         // if the output item is type dictionary double clicking it will add the name of the dictionary to the command_box path
@@ -82,12 +125,12 @@ function addOutputFunctionality(progname, progargs) {
       }
     });
 
-    // right click on item to ??
+    // right click on item to [TODO]
     output.addEventListener("contextmenu", (e) => {
       e.target.style.background = "yellow";
     });
 
-    // mouseout of item to ??
+    // mouseout of item to [TODO]
     output.addEventListener("mouseout", (e) => {
       e.target.style.background = "inherit";
     });
@@ -97,13 +140,13 @@ function addOutputFunctionality(progname, progargs) {
   }
 }
 // from command list get previous command and make command_box's value as this previous command
-const putPreviousCommand = () => {
-  command_box.value = commandlist.prev();
-};
+function putPreviousCommand() {
+  command_box.value = commandList.prev();
+}
 // from command list get next command and make command_box's value as this next command
-const putNextCommand = () => {
-  command_box.value = commandlist.next();
-};
+function putNextCommand() {
+  command_box.value = commandList.next();
+}
 var decorators = {
   "/bin/ls": (output, progargs) => {
     var wordlist = output.split("\n");
@@ -119,46 +162,6 @@ var decorators = {
   },
   "/bin/cat": (output, progargs) => {
     var uwu = `<span class="cat_text">${output}</span>`;
-    console.log(uwu);
     return uwu;
   },
 };
-
-// event handle for command_box
-function handle_keydown(event) {
-  event.stopPropagation();
-  // if enter command in command_box
-  if (event.keyCode == 13) {
-    var commandstring = document.getElementById("command_box").value;
-    commandlist.append(commandstring);
-    var tokenslist = new Lexer(commandstring).tokens;
-    var progname = tokenslist[0];
-    var progargs = [tokenslist[1]];
-    executeFile(progname, progargs).then(() => {
-      addOutputFunctionality(progname, progargs);
-    });
-  } // if up arrow when in command_box
-  else if (event.keyCode == 38) {
-    putPreviousCommand();
-  } // if down arrow when in command_box
-  else if (event.keyCode == 40) {
-    putNextCommand();
-  }
-}
-
-//event handler for output_box
-function handleOutOfFocus(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  // if tab key pressed then highlight next node in the output list
-  if (event.keyCode == 9) {
-    outputlist.highlightNext();
-  } // if enter pressed, then, for currently selected output_text node manually trigger the double click event
-  else if (event.keyCode == 13) {
-    outputlist.list[outputlist.currentIndex].dispatchEvent(
-      new Event("dblclick")
-    );
-  } else {
-    //do what?
-  }
-}
