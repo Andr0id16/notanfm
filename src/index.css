@@ -3,8 +3,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
   margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+  /* max-width: 38rem; */
+  padding: 0px;
   background-color: #282828;
 }
 
@@ -15,17 +15,21 @@ body {
 
 .command_area {
   background-color: #d79921;
-  height: 20px;
-  width:200px;
-  padding:4px;
+  height: 30px;
+  width:100%;
+  padding:10px;
+  margin:none;
   margin-bottom:4px;
   border:none;
+  box-sizing: border-box;
 }
 
 .command_area::placeholder {
   color: #3d3f32;
 }
-
+.command_area:focus{
+  outline: none;
+}
 .error_text {
   background-color: #fb4934;
 }
