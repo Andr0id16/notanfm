@@ -45,6 +45,7 @@ function handle_keydown(event) {
     // if esc key unfocus command_box
     case "Escape": {
       command_box.blur();
+      break;
     }
     case "p": {
       // ***TODO***
@@ -83,7 +84,7 @@ function handleOutOfFocus(event) {
       // get path upto parent directory
       var parent = current_path.slice(0, current_path.lastIndexOf("/")) || "/";
       command_box.value = `${progname} ${parent}`;
-      command_box.dispatchEvent(new KeyboardEvent("keydown", { keyCode: 13 }));
+      command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
       break;
     }
     //open terminal in current working directory
@@ -166,7 +167,7 @@ function addOutputFunctionality(progname, progargs) {
 
         // once command box has path of dictionary, manually trigger the 'keydown' (with enter) event for command_box which causes execution of command, but for this newly updated path of the directory
         command_box.dispatchEvent(
-          new KeyboardEvent("keydown", { keyCode: 13 })
+          new KeyboardEvent("keydown", { key: "Enter" })
         );
       } else {
         execFile(
