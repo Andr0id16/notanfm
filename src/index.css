@@ -1,11 +1,13 @@
 /* This is a very ugly style. Please change later */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   margin: auto;
   /* max-width: 38rem; */
   padding: 0px;
-  background-color: #282828;
+  background-repeat: no-repeat;
+  height: 100%;
+  /* background-color: #171515; */
+  background: -webkit-gradient(linear, left top, left bottom, from(#000060), to(#000033)) fixed;
 }
 
 .command_area,
@@ -14,7 +16,7 @@ body {
 }
 
 .command_area {
-  background-color: #d79921;
+  background-color:#92a8d1;
   height: 30px;
   width:100%;
   padding:10px;
@@ -22,16 +24,20 @@ body {
   margin-bottom:4px;
   border:none;
   box-sizing: border-box;
-}
+} 
 
 .command_area::placeholder {
   color: #3d3f32;
 }
 .command_area:focus{
-  outline: none;
+  outline: none; 
 }
 .error_text {
   background-color: #fb4934;
+}
+
+.output_text:hover{
+  -webkit-text-fill-color: #f75240;
 }
 
 .output_text {
@@ -39,11 +45,11 @@ body {
   margin:none;
   padding:8px;
   border: hidden;
-  color: #d79921;
+  color: whitesmoke;
 }
 
 .output_text a {
-  color: #d79921;
+  color: rosybrown;
 }
 
 .cat_text {
