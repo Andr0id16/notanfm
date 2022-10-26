@@ -41,7 +41,7 @@ body {
 }
 
 .output_text {
-  max-width: 100px;
+  width:150px;
   margin:none;
   padding:8px;
   border: hidden;
