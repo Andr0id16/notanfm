@@ -210,7 +210,7 @@ var decorators = {
     var wordlist = output.split("\n");
     var temp = "";
     outputObjectMap = {};
-    for (var i = 1; i < wordlist.length - 1; i++) {
+    for (var i = 0; i < wordlist.length - 1; i++) {
       // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
       console.log(wordlist[i]);
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
