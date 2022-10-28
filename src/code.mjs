@@ -15,7 +15,16 @@ command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
 
 // Function Declarations
+//startup file manager in the user's home directory
+function startup() {
+  // default startup path can be modified in defaults.js
+  command_box.value = `/bin/ls ${defaults["startupPath"] || "/"}`;
+  console.log(command_box.value);
+  command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+  console.log("lsed");
 
+  command_box.value = "";
+}
 // event handler for command_box
 function handle_keydown(event) {
   event.stopPropagation();
@@ -225,6 +234,7 @@ var decorators = {
   },
 };
 
+startup();
 // ***TODO***
 // /bin/ls ==> ls
 // status bar at bottom
