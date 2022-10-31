@@ -43,7 +43,7 @@ body {
 .output_text {
   width:150px;
   margin:none;
-  padding:8px;
+  padding: 2px;
   border: hidden;
   color: whitesmoke;
 }
@@ -54,4 +54,10 @@ body {
 
 .cat_text {
   color: #458588;
+}
+
+.image{
+  height: 20px;
+  width: 20px;
+  padding: 3px;
 }

@@ -103,7 +103,7 @@ function handleOutOfFocus(event) {
   }
 }
 
-// whenever a command generates ouptut each output item must obtain functionality such as dblclick, right-click,etc.
+// whenever a command generates output each output item must obtain functionality such as dblclick, right-click,etc.
 // executeFile promises 🤝 that execFile generates some output, like a list of files/directories
 // promise resolved only on completion of generation of output
 // once promise is resolved , ***only then*** manipulate output, like adding functionality to thr output
@@ -127,7 +127,7 @@ function executeFile(progname, progargs) {
   });
 }
 
-// Use this function if you want to add interactivity to genrated output elements
+// Use this function if you want to add interactivity to generated output elements
 // this functions grabs all generated output element and one-by-one adds event listeners to each item
 function addOutputFunctionality(progname, progargs) {
   // create a list of the output_text DOM nodes
@@ -214,7 +214,8 @@ var decorators = {
       // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
       console.log(wordlist[i]);
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div class="output_text">${wordlist[i]}</div>`;
+      temp += `<div style={float:left;}><img src="/home/varunhr/Pictures/Random/folder.png" class="image"></div>
+               <div class="output_text"w>${wordlist[i]}</div>`;
     }
 
     return temp;
