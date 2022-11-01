@@ -4,6 +4,7 @@
 // startupPath is the default directory into the which the file manager opens
 // please retain the null || to make the defaults work
 var defaults = {
+<<<<<<< HEAD
   tex: "code",
   txt: "code",
   html: "code",
@@ -11,6 +12,18 @@ var defaults = {
   png: "eog",
   default: "code",
   startupPath: null || "/home/aragorn/Desktop",
+=======
+  tex: "code",
+  txt: "code",
+  html: "code",
+  pdf: "code",
+  png: "code",
+  default: "emacs",
+  term: {
+    cmd: "gnome-terminal",
+    args: [`--working-directory=${pwd}`]
+  }
+>>>>>>> 788378e (Fixed issue of first item not appearing)
 };
 
 module.exports.defaults = defaults;

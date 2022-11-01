@@ -99,7 +99,7 @@ function handleOutOfFocus(event) {
     //open terminal in current working directory
     case "t": {
       var pwd = command_box.value.split(" ")[1] || `/home/$USER`;
-      executeFile("gnome-terminal", [`--working-directory=${pwd}`]);
+      executeFile(defaults.term.cmd, defaults.term.args]);
     }
     // focus command box on alt
     case "Alt": {
@@ -229,8 +229,8 @@ var decorators = {
     return temp;
   },
   "/bin/cat": (output, progargs) => {
-    var uwu = `<span class="cat_text">${output}</span>`;
-    return uwu;
+    var x = `<span class="cat_text">${output}</span>`;
+    return x;
   },
 };
 
