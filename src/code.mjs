@@ -18,7 +18,7 @@ document.addEventListener("keydown", handleOutOfFocus);
 //startup file manager in the user's home directory
 function startup() {
   // default startup path can be modified in defaults.js
-  command_box.value = `/bin/ls ${defaults["startupPath"] || "/"}`;
+  command_box.value = `ls ${defaults["startupPath"] || "/"}`;
   console.log(command_box.value);
   command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
   console.log("lsed");
@@ -111,6 +111,27 @@ function handleOutOfFocus(event) {
     }
   }
 }
+// function to get path of common commands
+// returns null is the command is not found
+// return path otherwise
+// specify path to "which" executable
+function which(progname) {
+  var pathPromise = new Promise((resolve, reject) => {
+    execFile("/usr/bin/which", [progname], {}, (error, stdout, stderr) => {
+      if (error) {
+        console.log(error);
+        reject(error);
+      } else if (stdout) {
+        console.log(stdout);
+        resolve(stdout.slice(4).trim());
+      } else {
+        reject(error);
+      }
+    });
+  });
+
+  return pathPromise;
+}
 
 // whenever a command generates ouptut each output item must obtain functionality such as dblclick, right-click,etc.
 // executeFile promises 🤝 that execFile generates some output, like a list of files/directories
@@ -125,13 +146,21 @@ function executeFile(progname, progargs) {
     // make it so that progname can be referred to using a bins.js file
     // similar to defaults.js
     execFile(progname, progargs, {}, (error, stdout, stderr) => {
-      if (decorators[progname])
-        output_box.innerHTML = decorators[progname](stdout, progargs);
-      else output_box.innerHTML = `${stdout}`;
-      if (error) {
-        console.log(error);
-      }
-      resolve();
+      which(progname)
+        .then((progname) => {
+          console.log("progname: " + progname);
+          if (decorators[progname]) {
+            console.log(`selected ${progname}`);
+            output_box.innerHTML = decorators[progname](stdout, progargs);
+          } else output_box.innerHTML = `${stdout}`;
+          if (error) {
+            console.log(error);
+          }
+          resolve();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
   });
 }
