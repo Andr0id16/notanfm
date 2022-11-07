@@ -14,6 +14,11 @@ var previewWindow = null;
 command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
 
+var aliases = {
+  'ls' : '/bin/ls',
+  'pwd' : 'bin/pwd'
+};
+
 // Function Declarations
 //startup file manager in the user's home directory
 function startup() {
@@ -37,6 +42,9 @@ function handle_keydown(event) {
       var tokenslist = new Lexer(commandString).tokens;
       var progname = tokenslist[0];
       var progargs = [tokenslist[1]];
+      if (defaults.aliases[progname]) {
+        progname = defaults.aliases[progname];
+      }
       executeFile(progname, progargs).then(() => {
         addOutputFunctionality(progname, progargs);
       });
@@ -99,7 +107,7 @@ function handleOutOfFocus(event) {
     //open terminal in current working directory
     case "t": {
       var pwd = command_box.value.split(" ")[1] || `/home/$USER`;
-      executeFile("gnome-terminal", [`--working-directory=${pwd}`]);
+      executeFile(defaults.term.cmd, defaults.term.args);
     }
     // focus command box on alt
     case "Alt": {
@@ -229,8 +237,8 @@ var decorators = {
     return temp;
   },
   "/bin/cat": (output, progargs) => {
-    var uwu = `<span class="cat_text">${output}</span>`;
-    return uwu;
+    var x = `<span class="cat_text">${output}</span>`;
+    return x;
   },
 };
 
