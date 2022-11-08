@@ -55,9 +55,23 @@ body {
 .cat_text {
   color: #458588;
 }
-
+.bigcontainer{
+  display:table;
+  margin:15px;
+}
+.smallcontainer{
+  padding:4px;
+  display: table-row;
+}
+.output_text{
+  vertical-align: middle;
+  border:none;
+  display:table-cell;
+  padding-left:6px;
+}
 .image{
-  height: 20px;
-  width: 20px;
-  padding: 3px;
+  border:none;
+  /* margin-right:4px;
+  padding-top:5px; */
+  display: table-cell;
 }
