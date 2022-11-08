@@ -223,10 +223,9 @@ var decorators = {
       // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
       console.log(wordlist[i]);
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div style={float:left;}><img src="/home/varunhr/Pictures/Random/folder.png" class="image"></div>
+      temp += `<div style={float:left;}><img src="../assets/icons/folder.png" class="image"></div>
                <div class="output_text"w>${wordlist[i]}</div>`;
     }
-
     return temp;
   },
   "/bin/cat": (output, progargs) => {
