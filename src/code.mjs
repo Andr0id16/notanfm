@@ -5,6 +5,10 @@ const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
 
+require('dotenv').config();
+
+var path_dirs = process.env.PATH.split(':');
+
 // Globals declaration
 var output_box = document.getElementById("output_box");
 var command_box = document.getElementById("command_box");
@@ -13,11 +17,6 @@ var outputList = new OutputNodeList();
 var previewWindow = null;
 command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
-
-var aliases = {
-  'ls' : '/bin/ls',
-  'pwd' : 'bin/pwd'
-};
 
 // Function Declarations
 //startup file manager in the user's home directory

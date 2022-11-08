@@ -48,7 +48,8 @@
     "bulma": "^0.9.4",
     "child_process": "^1.0.2",
     "electron-squirrel-startup": "^1.0.0",
-    "prompt-sync": "^4.2.0"
+    "prompt-sync": "^4.2.0",
+    "dotenv": "6.0.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.65",
