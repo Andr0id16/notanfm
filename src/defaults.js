@@ -11,6 +11,9 @@ var defaults = {
   png: "eog",
   default: "code",
   startupPath: null || "/home/aragorn/Desktop",
+  aliases: {
+    ls: "/bin/ls",
+  },
 };
 
 module.exports.defaults = defaults;
