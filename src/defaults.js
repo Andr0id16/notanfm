@@ -9,7 +9,6 @@ var defaults = {
   html: "code",
   pdf: "evince",
   png: "eog",
-  jpg: "Gwenview",
   default: "code",
   startupPath: null || "/home/aragorn/Desktop",
   aliases: {
