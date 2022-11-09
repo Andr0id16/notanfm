@@ -1,4 +1,5 @@
 const { execFile } = require("child_process");
+const { fs } = require("file-system");
 const { Lexer } = require("./parser.js");
 const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
@@ -29,6 +30,20 @@ function startup() {
 
   command_box.value = "";
 }
+
+// Checks for aliases and in path
+function checkalias(progname) {
+  if (defaults.aliases[progname])
+    return defaults.aliases[progname];
+
+  for (let i = 0; i < path_dirs.length; i++) {
+    if (fs.existsSync(path_dirs[i] + '/' + progname))
+      return (path_dirs[i] + '/' + progname);
+  }
+
+  return undefined;
+}
+
 // event handler for command_box
 function handle_keydown(event) {
   event.stopPropagation();
@@ -41,9 +56,10 @@ function handle_keydown(event) {
       var tokenslist = new Lexer(commandString).tokens;
       var progname = tokenslist[0];
       var progargs = [tokenslist[1]];
-      if (defaults.aliases[progname]) {
-        progname = defaults.aliases[progname];
-      }
+
+      var a = checkalias(progname);
+      if (a != undefined) progname = a;
+      
       executeFile(progname, progargs).then(() => {
         addOutputFunctionality(progname, progargs);
       });
