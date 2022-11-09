@@ -11,9 +11,7 @@ var defaults = {
   png: "sxiv",
   default: "emacs",
   startupPath: null || "/home/noze",
-  aliases: {
-    'ls': '/bin/ls',
-  }
+  aliases: {}
 };
 
 module.exports.defaults = defaults;

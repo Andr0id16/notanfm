@@ -52,7 +52,6 @@ function handle_keydown(event) {
     case "Enter": {
       var commandString = document.getElementById("command_box").value;
       commandList.append(commandString);
-      console.log(commandList.list);
       var tokenslist = new Lexer(commandString).tokens;
       var progname = tokenslist[0];
       var progargs = [tokenslist[1]];
@@ -237,20 +236,25 @@ function putPreviousCommand() {
 function putNextCommand() {
   command_box.value = commandList.next();
 }
-var decorators = {
-  "/bin/ls": (output, progargs) => {
-    var wordlist = output.split("\n");
-    var temp = "";
-    outputObjectMap = {};
-    for (var i = 0; i < wordlist.length - 1; i++) {
-      // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
-      console.log(wordlist[i]);
-      outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div class="output_text">${wordlist[i]}</div>`;
-    }
 
-    return temp;
-  },
+function lsdec(output, progargs) {
+  var wordlist = output.split("\n");
+  var temp = "";
+  outputObjectMap = {};
+
+  for (var i = 0; i < wordlist.length - 1; i++) {
+    // Create a hashtable with key as output name
+    // and value as OutputObject corresponding to that name
+    outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
+    temp += `<div class="output_text">${wordlist[i]}</div>`;
+  }
+
+  return temp;
+}
+
+var decorators = {
+  "/bin/ls": lsdec,
+  "/usr/bin/ls": lsdec,
   "/bin/cat": (output, progargs) => {
     var x = `<span class="cat_text">${output}</span>`;
     return x;
