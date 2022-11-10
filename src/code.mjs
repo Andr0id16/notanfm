@@ -249,3 +249,7 @@ startup();
 // copy paste selected file
 // styling
 // testing and error rectification
+
+// exports for testing
+
+module.exports.handleOutOfFocus = handleOutOfFocus;
