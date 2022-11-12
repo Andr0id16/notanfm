@@ -4,6 +4,7 @@ const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
+// require("./contextmenu.js")
 
 // Globals declaration
 var output_box = document.getElementById("output_box");
