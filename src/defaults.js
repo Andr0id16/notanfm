@@ -10,7 +10,7 @@ var defaults = {
   pdf: "evince",
   png: "eog",
   default: "code",
-  startupPath: null || "/home/aragorn/Desktop",
+  startupPath: null || "/home/varunhr/Desktop",
   aliases: {
     ls: "/bin/ls",
   },
