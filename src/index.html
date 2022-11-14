@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <title>Hello World!</title>
     <link rel="stylesheet" href="index.css" />
-    
   </head>
   <body>
     <input
@@ -14,18 +13,14 @@
       placeholder="Type your command here"
     />
     <div class="output" id="output_box"></div>
-    
-    <div id="contextMenu" class="context-menu" style="display: none"> 
-      <ul class="menu"> 
-          <li class="share"><a href="#">Share</a></li> 
-          <li class="rename"><a href="#">Rename</a></li> 
-          <li class="link"><a href="#">Copy Link Address</a></li> 
-          <li class="copy"><a href="#">Copy to</a></li> 
-          <li class="paste"><a href="#">Move to</a></li> 
-          <li class="download"><a href="#">Download</a></li> 
-          <li class="trash"><a href="#">Delete</a></li> 
-      </ul> 
-    </div> 
+
+    <div id="contextMenu" class="context-menu" style="display: none">
+      <ul class="menu">
+        <li class="copy" id="copy"><a href="#">copy</a></li>
+        <li class="paste" id="paste"><a href="#">paste</a></li>
+        <li class="trash" id="delete"><a href="#">delete</a></li>
+      </ul>
+    </div>
     <script type="module" src="code.mjs"></script>
     <script src="contextmenu.js"></script>
   </body>

@@ -4,6 +4,7 @@ const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
+const { rightClick } = require("./contextmenu.js");
 // require("./contextmenu.js")
 
 // Globals declaration
@@ -203,7 +204,7 @@ function addOutputFunctionality(progname, progargs) {
 
     // right click on item to [TODO]
     output.addEventListener("contextmenu", (e) => {
-      e.target.style.background = "yellow";
+      rightClick(e, object);
     });
 
     // mouseout of item to [TODO]

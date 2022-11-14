@@ -84,16 +84,13 @@ ul {
 .menu {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgb(64 64 64 / 5%);
+  background-color: #92a8d1;
   padding: 10px 0;
 }
 .menu > li > a {
   font: inherit;
   border: 0;
   padding: 10px 30px 10px 15px;
-  width: 100%;
   display: flex;
   align-items: center;
   position: relative;
