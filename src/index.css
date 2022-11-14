@@ -55,3 +55,23 @@ body {
 .cat_text {
   color: #458588;
 }
+
+table.grep_table {
+  width: 100%;
+  margin: none;
+  color: #ffffff;
+}
+
+th.grep_table {
+  width: 30%;
+  margin: none;
+  padding: 4px;
+  background-color: #333333
+}
+
+td.grep_table {
+  margin: none;
+  padding: 4px;
+  background-color: #222222
+}
+

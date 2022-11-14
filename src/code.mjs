@@ -5,16 +5,64 @@ const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
-var decorators = require("./decorators.js");
 
 require('dotenv').config();
 
 var path_dirs = process.env.PATH.split(':');
 
+var decorators = {
+  lsdec: (output, progargs) => {
+    var wordlist = output.split("\n");
+    var temp = "";
+    outputObjectMap = {};
+  
+    for (var i = 0; i < wordlist.length - 1; i++) {
+      // Create a hashtable with key as output name
+      // and value as OutputObject corresponding to that name
+      outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
+      temp += `<div class="output_text">${wordlist[i]}</div>`;
+    }
+  
+    return temp;
+  },
+  
+  catdec: (output, progargs) => {
+    var x = `<span class="cat_text">${output}</span>`;
+    return x;
+  },
+
+  grepdec: (output, progargs) => {
+    var wordlist = output.split("\n");
+    var temp = "<table class='grep_table'>";
+
+    if (progargs.length <= 2) {
+      temp +=
+        `<tr class='grep_table'><th class='grep_table'>${progargs[1]}</th></tr>`;
+      for (var i = 0; i < wordlist.length; i++) {
+        temp += "<tr class='grep_table'>";
+        temp += `<td class="grep_table">${wordlist[i]}</td>`;
+        temp += "</tr>";
+      }
+    } else {
+      for (var i = 0; i < wordlist.length; i++) {
+        let dio = wordlist[i].split(":");
+        temp += "<tr class='grep_table'>";
+        temp += `<th class='grep_table'>${dio[0]}</th>`;
+        temp += `<td class='grep_table'>${dio[1]}</td>`;
+        temp += `</tr>`;
+      }
+      temp += "</table>";
+    }
+
+    return temp;
+  }
+}
+
 var associations = {
   "/bin/ls": decorators.lsdec,
   "/usr/bin/ls": decorators.lsdec,
-  "/bin/cat": decorators.catdec
+  "/bin/cat": decorators.catdec,
+  "/usr/bin/grep": decorators.grepdec
 };
 
 // Globals declaration
@@ -61,7 +109,7 @@ function handle_keydown(event) {
       commandList.append(commandString);
       var tokenslist = new Lexer(commandString).tokens;
       var progname = tokenslist[0];
-      var progargs = [tokenslist[1]];
+      var progargs = tokenslist.slice(1, tokenslist.length);
 
       var a = checkalias(progname);
       if (a != undefined) progname = a;
@@ -159,6 +207,7 @@ function executeFile(progname, progargs) {
       else output_box.innerHTML = `${stdout}`;
       if (error) {
         console.log(error);
+        console.log(stderr);
       }
       resolve();
     });
