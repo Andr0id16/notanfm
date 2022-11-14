@@ -1,26 +1,38 @@
 /* This is a very ugly style. Please change later */
+::-webkit-scrollbar {
+  display: none;
+}
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   margin: auto;
   /* max-width: 38rem; */
   padding: 0px;
   background-repeat: no-repeat;
   height: 100%;
-  /* background-color: #171515; */
-  background: -webkit-gradient(linear, left top, left bottom, from(#000060), to(#000033)) fixed;
+  background-color: #3B4252;
+  /* background: -webkit-gradient(linear, left top, left bottom, from(#000060), to(#000033)) fixed; */
 }
 
+.command_area_container{
+  padding: 16px;
+}
 .command_area,
 .output {
-  font-family: monospace;
+  font-family:"Roboto Medium"
+}
+
+.output{
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .command_area {
-  background-color:#92a8d1;
-  height: 30px;
+  background-color:#88C0D0;
+  height: 40px;
   width:100%;
   padding:10px;
-  margin:none;
+  /* margin:none; */
   margin-bottom:4px;
   border:none;
   box-sizing: border-box;
@@ -41,11 +53,14 @@ body {
 }
 
 .output_text {
+  flex:auto;
+  flex-grow:3;
+  font-size: medium;
   width:150px;
   margin:none;
   padding: 2px;
   border: hidden;
-  color: whitesmoke;
+  color: #b0d3dd;
 }
 
 .output_text a {
@@ -61,17 +76,22 @@ body {
 }
 .smallcontainer{
   padding:4px;
-  display: table-row;
+  align-items: center;
+  /* display: table-row; */
 }
 .output_text{
   vertical-align: middle;
   border:none;
   display:table-cell;
   padding-left:6px;
+  min-width: 200px;
+  max-width: 200px;
+  overflow-wrap: break-word;
 }
 .image{
+  
   border:none;
   /* margin-right:4px;
   padding-top:5px; */
-  display: table-cell;
+  /* display: table-cell; */
 }

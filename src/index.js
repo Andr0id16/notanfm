@@ -13,6 +13,8 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
+    icon: __dirname + "/icon.ico",
     webPreferences: {
       //   nodeIntegration: true,
       //   // preload: path.join(__dirname, "preload.js"),
@@ -32,6 +34,20 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, "index.html"));
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+  var splash = new BrowserWindow({
+    width: 500,
+    height: 300,
+    transparent: true,
+    frame: false,
+    alwaysOnTop: true,
+  });
+  splash.loadFile(path.join(__dirname, "splash.html"));
+  splash.center();
+  setTimeout(() => {
+    splash.close();
+    mainWindow.show();
+  }, 1000);
+  // mainWindow.setIcon(path.join(__dirname, "/icon.ico"));
 };
 
 // This method will be called when Electron has finished

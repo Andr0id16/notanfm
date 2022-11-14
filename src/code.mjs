@@ -234,7 +234,7 @@ var decorators = {
       // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
       console.log(wordlist[i]);
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="../assets/icons/folder.png" widht="20px" height="20px" class="image"></div>
+      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="../assets/icons/folder.png" width="40px" height="40px" class="image"></div>
                <div class="output_text">${wordlist[i]}</div></div></div>`;
     }
     return temp;
