@@ -4,18 +4,18 @@
 // startupPath is the default directory into the which the file manager opens
 // please retain the null || to make the defaults work
 var defaults = {
-  tex: "emacs",
-  txt: "emacs",
-  html: "firefox",
-  pdf: "zathura",
-  png: "sxiv",
-  default: "emacs",
+  tex: "code",
+  txt: "code",
+  html: "code",
+  pdf: "evince",
+  png: "eog",
+  default: "code",
   startupPath: null || "/home/noze",
   aliases: {},
   term: {
     cmd: "st",
-    args: []
-  }
+    args: [],
+  },
 };
 
 module.exports.defaults = defaults;
