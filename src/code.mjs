@@ -5,10 +5,17 @@ const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
+var decorators = require("./decorators.js");
 
 require('dotenv').config();
 
 var path_dirs = process.env.PATH.split(':');
+
+var associations = {
+  "/bin/ls": decorators.lsdec,
+  "/usr/bin/ls": decorators.lsdec,
+  "/bin/cat": decorators.catdec
+};
 
 // Globals declaration
 var output_box = document.getElementById("output_box");
@@ -147,8 +154,8 @@ function executeFile(progname, progargs) {
     // make it so that progname can be referred to using a bins.js file
     // similar to defaults.js
     execFile(progname, progargs, {}, (error, stdout, stderr) => {
-      if (decorators[progname])
-        output_box.innerHTML = decorators[progname](stdout, progargs);
+      if (associations[progname])
+        output_box.innerHTML = associations[progname](stdout, progargs);
       else output_box.innerHTML = `${stdout}`;
       if (error) {
         console.log(error);
@@ -236,30 +243,6 @@ function putPreviousCommand() {
 function putNextCommand() {
   command_box.value = commandList.next();
 }
-
-function lsdec(output, progargs) {
-  var wordlist = output.split("\n");
-  var temp = "";
-  outputObjectMap = {};
-
-  for (var i = 0; i < wordlist.length - 1; i++) {
-    // Create a hashtable with key as output name
-    // and value as OutputObject corresponding to that name
-    outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-    temp += `<div class="output_text">${wordlist[i]}</div>`;
-  }
-
-  return temp;
-}
-
-var decorators = {
-  "/bin/ls": lsdec,
-  "/usr/bin/ls": lsdec,
-  "/bin/cat": (output, progargs) => {
-    var x = `<span class="cat_text">${output}</span>`;
-    return x;
-  },
-};
 
 startup();
 // ***TODO***
