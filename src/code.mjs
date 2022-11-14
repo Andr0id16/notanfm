@@ -6,26 +6,26 @@ const { OutputNodeList, OutputObject } = require("./output.js");
 var { outputObjectMap } = require("./output.js");
 var { defaults } = require("./defaults.js");
 
-require('dotenv').config();
+require("dotenv").config();
 
-var path_dirs = process.env.PATH.split(':');
+var path_dirs = process.env.PATH.split(":");
 
 var decorators = {
   lsdec: (output, progargs) => {
     var wordlist = output.split("\n");
     var temp = "";
     outputObjectMap = {};
-  
+
     for (var i = 0; i < wordlist.length - 1; i++) {
       // Create a hashtable with key as output name
       // and value as OutputObject corresponding to that name
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
       temp += `<div class="output_text">${wordlist[i]}</div>`;
     }
-  
+
     return temp;
   },
-  
+
   catdec: (output, progargs) => {
     var x = `<span class="cat_text">${output}</span>`;
     return x;
@@ -36,8 +36,7 @@ var decorators = {
     var temp = "<table class='grep_table'>";
 
     if (progargs.length <= 2) {
-      temp +=
-        `<tr class='grep_table'><th class='grep_table'>${progargs[1]}</th></tr>`;
+      temp += `<tr class='grep_table'><th class='grep_table'>${progargs[1]}</th></tr>`;
       for (var i = 0; i < wordlist.length; i++) {
         temp += "<tr class='grep_table'>";
         temp += `<td class="grep_table">${wordlist[i]}</td>`;
@@ -55,14 +54,14 @@ var decorators = {
     }
 
     return temp;
-  }
-}
+  },
+};
 
 var associations = {
   "/bin/ls": decorators.lsdec,
   "/usr/bin/ls": decorators.lsdec,
   "/bin/cat": decorators.catdec,
-  "/usr/bin/grep": decorators.grepdec
+  "/usr/bin/grep": decorators.grepdec,
 };
 
 // Globals declaration
@@ -88,12 +87,11 @@ function startup() {
 
 // Checks for aliases and in path
 function checkalias(progname) {
-  if (defaults.aliases[progname])
-    return defaults.aliases[progname];
+  if (defaults.aliases[progname]) return defaults.aliases[progname];
 
   for (let i = 0; i < path_dirs.length; i++) {
-    if (fs.existsSync(path_dirs[i] + '/' + progname))
-      return (path_dirs[i] + '/' + progname);
+    if (fs.existsSync(path_dirs[i] + "/" + progname))
+      return path_dirs[i] + "/" + progname;
   }
 
   return undefined;
@@ -113,7 +111,7 @@ function handle_keydown(event) {
 
       var a = checkalias(progname);
       if (a != undefined) progname = a;
-      
+
       executeFile(progname, progargs).then(() => {
         addOutputFunctionality(progname, progargs);
       });
@@ -269,7 +267,6 @@ function addOutputFunctionality(progname, progargs) {
         );
       }
     });
-
     // right click on item to [TODO]
     output.addEventListener("contextmenu", (e) => {
       e.target.style.background = "yellow";
