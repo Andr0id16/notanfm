@@ -14,6 +14,10 @@ var defaults = {
   aliases: {
     ls: "/bin/ls",
   },
+  term: {
+    cmd: "gnome-terminal",
+    args: [],
+  },
 };
 
 module.exports.defaults = defaults;

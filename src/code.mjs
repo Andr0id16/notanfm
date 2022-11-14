@@ -102,12 +102,15 @@ function handleOutOfFocus(event) {
       var parent = current_path.slice(0, current_path.lastIndexOf("/")) || "/";
       command_box.value = `${progname} ${parent}`;
       command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
       break;
     }
     //open terminal in current working directory
     case "t": {
       var pwd = command_box.value.split(" ")[1] || `/home/$USER`;
-      executeFile(defaults.term.cmd, defaults.term.args);
+      executeFile(defaults.term.cmd, [`--working-directory=${pwd}`]);
+      command_box.value = "ls " + pwd;
+      command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
     }
     // focus command box on alt
     case "Alt": {
