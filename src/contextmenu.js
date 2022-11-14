@@ -15,9 +15,7 @@ function rightClick(e, object) {
     var copy = document.getElementById("copy");
     var paste = document.getElementById("paste");
     var del = document.getElementById("delete");
-    copy.addEventListener("click", () => {
-      exec(`cp ${object.path}`);
-    });
+  
   }
 }
 

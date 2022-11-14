@@ -204,7 +204,7 @@ function addOutputFunctionality(progname, progargs) {
 
     // right click on item to [TODO]
     output.addEventListener("contextmenu", (e) => {
-      rightClick(e, object);
+    
     });
 
     // mouseout of item to [TODO]
