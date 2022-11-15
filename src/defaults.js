@@ -25,6 +25,7 @@ var defaults = {
     jpg: "../assets/icons/jpg.png",
     png: "../assets/icons/png.png",
     mp4: "../assets/icons/media.png",
+    mp3: "../assets/icons/media.png",
     dictionary: "../assets/icons/folder.png",
     zip: "../assets/icons/zip.png",
     default: "../assets/icons/file.png",
