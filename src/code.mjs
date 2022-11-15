@@ -27,8 +27,6 @@ function startup() {
   console.log(command_box.value);
   command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
   console.log("lsed");
-
-  command_box.value = "";
 }
 // event handler for command_box
 function handle_keydown(event) {
@@ -232,9 +230,14 @@ var decorators = {
     outputObjectMap = {};
     for (var i = 0; i < wordlist.length - 1; i++) {
       // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
-      console.log(wordlist[i]);
+      // console.log(wordlist[i]);
       outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="../assets/icons/folder.png" width="40px" height="40px" class="image"></div>
+      console.log(defaults.icons[wordlist[i]]);
+      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="${
+        defaults.icons[wordlist[i]] ||
+        defaults.icons[outputObjectMap[wordlist[i]].type] ||
+        defaults.icons["default"]
+      }" width="40px" height="40px" class="image"></div>
                <div class="output_text">${wordlist[i]}</div></div></div>`;
     }
     return temp;
@@ -249,6 +252,3 @@ startup();
 // ***TODO***
 // status bar at bottom
 // init files
-// copy paste selected file
-// styling
-// testing and error rectification
