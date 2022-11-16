@@ -18,7 +18,7 @@ body {
 }
 .command_area,
 .output {
-  font-family:"Roboto Medium"
+  font-family:"URW Gothic"
 }
 
 .output{
@@ -94,4 +94,20 @@ body {
   /* margin-right:4px;
   padding-top:5px; */
   /* display: table-cell; */
+}
+
+table.grep_table {
+  color: #b0d3dd;
+}
+
+tr.grep_table {
+  border: none;
+}
+
+th.grep_table {
+  background-color: #3B4252
+}
+
+td.grep_table {
+  background-color: #458588;
 }

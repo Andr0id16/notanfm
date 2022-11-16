@@ -19,7 +19,7 @@ const createWindow = () => {
       //   nodeIntegration: true,
       //   // preload: path.join(__dirname, "preload.js"),
       // }
-      devTools: true,
+      // devTools: true,
       enableRemoteModule: true,
       contextIsolation: false,
       backgroundThrottling: false,
@@ -33,7 +33,7 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, "index.html"));
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   var splash = new BrowserWindow({
     width: 500,
     height: 300,

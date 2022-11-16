@@ -48,7 +48,9 @@
   "dependencies": {
     "bulma": "^0.9.4",
     "child_process": "^1.0.2",
+    "dotenv": "^16.0.3",
     "electron-squirrel-startup": "^1.0.0",
+    "file-system": "^2.2.2",
     "jest": "^29.3.1",
     "prompt-sync": "^4.2.0"
   },

@@ -1,4 +1,5 @@
 const { execFile } = require("child_process");
+const { fs } = require("file-system");
 const { Lexer } = require("./parser.js");
 const { CommandList } = require("./commandboxlogic.js");
 const { OutputNodeList, OutputObject } = require("./output.js");
@@ -14,9 +15,66 @@ var previewWindow = null;
 command_box.addEventListener("keydown", handle_keydown);
 document.addEventListener("keydown", handleOutOfFocus);
 
-var aliases = {
-  ls: "/bin/ls",
-  pwd: "bin/pwd",
+require("dotenv").config();
+
+var path_dirs = process.env.PATH.split(":");
+
+var decorators = {
+  lsdec: (output, progargs) => {
+    var wordlist = output.split("\n");
+    var temp = "";
+    outputObjectMap = {};
+    for (var i = 0; i < wordlist.length - 1; i++) {
+      // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
+      // console.log(wordlist[i]);
+      outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
+      console.log(defaults.icons[wordlist[i]]);
+      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="${
+        defaults.icons[wordlist[i]] ||
+        defaults.icons[outputObjectMap[wordlist[i]].type] ||
+        defaults.icons["default"]
+      }" width="40px" height="40px" class="image"></div>
+               <div class="output_text">${wordlist[i]}</div></div></div>`;
+    }
+    return temp;
+  },
+
+  catdec: (output, progargs) => {
+    var x = `<span class="cat_text">${output}</span>`;
+    return x;
+  },
+
+  grepdec: (output, progargs) => {
+    var wordlist = output.split("\n");
+    var temp = "<table class='grep_table'>";
+
+    if (progargs.length <= 2) {
+      temp += `<tr class='grep_table'><th class='grep_table'>${progargs[1]}</th></tr>`;
+      for (var i = 0; i < wordlist.length; i++) {
+        temp += "<tr class='grep_table'>";
+        temp += `<td class="grep_table">${wordlist[i]}</td>`;
+        temp += "</tr>";
+      }
+    } else {
+      for (var i = 0; i < wordlist.length; i++) {
+        let dio = wordlist[i].split(":");
+        temp += "<tr class='grep_table'>";
+        temp += `<th class='grep_table'>${dio[0]}</th>`;
+        temp += `<td class='grep_table'>${dio[1]}</td>`;
+        temp += `</tr>`;
+      }
+      temp += "</table>";
+    }
+
+    return temp;
+  },
+};
+
+var associations = {
+  "/bin/ls": decorators.lsdec,
+  "/usr/bin/ls": decorators.lsdec,
+  "/bin/cat": decorators.catdec,
+  "/usr/bin/grep": decorators.grepdec,
 };
 
 // Function Declarations
@@ -28,6 +86,18 @@ function startup() {
   command_box.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
   console.log("lsed");
 }
+
+function checkalias(progname) {
+  if (defaults.aliases[progname]) return defaults.aliases[progname];
+
+  for (let i = 0; i < path_dirs.length; i++) {
+    if (fs.existsSync(path_dirs[i] + "/" + progname))
+      return path_dirs[i] + "/" + progname;
+  }
+
+  return undefined;
+}
+
 // event handler for command_box
 function handle_keydown(event) {
   event.stopPropagation();
@@ -39,10 +109,11 @@ function handle_keydown(event) {
       console.log(commandList.list);
       var tokenslist = new Lexer(commandString).tokens;
       var progname = tokenslist[0];
-      var progargs = [tokenslist[1]];
-      if (defaults.aliases[progname]) {
-        progname = defaults.aliases[progname];
-      }
+      var progargs = tokenslist.slice(1, tokenslist.length);
+
+      var a = checkalias(progname);
+      if (a != undefined) progname = a;
+
       executeFile(progname, progargs).then(() => {
         addOutputFunctionality(progname, progargs);
       });
@@ -134,8 +205,8 @@ function executeFile(progname, progargs) {
     // make it so that progname can be referred to using a bins.js file
     // similar to defaults.js
     execFile(progname, progargs, {}, (error, stdout, stderr) => {
-      if (decorators[progname])
-        output_box.innerHTML = decorators[progname](stdout, progargs);
+      if (associations[progname])
+        output_box.innerHTML = associations[progname](stdout, progargs);
       else output_box.innerHTML = `${stdout}`;
       if (error) {
         console.log(error);
@@ -223,30 +294,6 @@ function putPreviousCommand() {
 function putNextCommand() {
   command_box.value = commandList.next();
 }
-var decorators = {
-  "/bin/ls": (output, progargs) => {
-    var wordlist = output.split("\n");
-    var temp = "";
-    outputObjectMap = {};
-    for (var i = 0; i < wordlist.length - 1; i++) {
-      // basically create a hashtable with key as output name and value as OutputObject corresponding to that name
-      // console.log(wordlist[i]);
-      outputObjectMap[wordlist[i]] = new OutputObject(progargs, wordlist[i]);
-      console.log(defaults.icons[wordlist[i]]);
-      temp += `<div class="bigcontainer"><div class="smallcontainer"><div class="image"><img src="${
-        defaults.icons[wordlist[i]] ||
-        defaults.icons[outputObjectMap[wordlist[i]].type] ||
-        defaults.icons["default"]
-      }" width="40px" height="40px" class="image"></div>
-               <div class="output_text">${wordlist[i]}</div></div></div>`;
-    }
-    return temp;
-  },
-  "/bin/cat": (output, progargs) => {
-    var x = `<span class="cat_text">${output}</span>`;
-    return x;
-  },
-};
 
 startup();
 // ***TODO***
