@@ -17,7 +17,7 @@ NotanFM (Not A File Manager) is not just your typical file manager; it's a power
 
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/your-username/notanfm.git
+    git clone https://github.com/Andr0id16/notanfm.git
     cd notanfm
     ```
 
